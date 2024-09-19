@@ -29,8 +29,8 @@ AsyncChunkJS is a Node.js application that provides near-realtime speech-to-text
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/AsyncChunk.git
-   cd AsyncChunk
+   git clone https://github.com/AssemblyAI-Solutions/async-chunk-js.git
+   cd async-chunk-js
    ```
 
 2. Install dependencies:
@@ -47,7 +47,7 @@ AsyncChunkJS is a Node.js application that provides near-realtime speech-to-text
 
 1. Start the application:
    ```
-   yarn start
+   node index.js
    ```
 
 2. Speak into your microphone. The application will record and transcribe your speech in near-realtime.
@@ -75,18 +75,6 @@ This project uses the `speech-recorder` library for VAD. You can adjust VAD para
 - `index.js`: Main application file handling audio recording, chunking, and coordination.
 - `transcriptionWorker.js`: Worker for handling transcription tasks using AssemblyAI API.
 - `audioThread.js`: Worker for managing voice activity detection.
-
-## Dependencies
-
-This project uses several key dependencies:
-
-- `mic`: For audio recording
-- `wav`: For WAV file handling
-- `speech-recorder`: For Voice Activity Detection
-- `assemblyai`: For speech-to-text transcription
-- `dotenv`: For environment variable management
-
-For a full list of dependencies, see the `package.json` file.
 
 ## Contributing
 
