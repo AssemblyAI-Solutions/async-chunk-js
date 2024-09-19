@@ -76,17 +76,8 @@ This project uses the `speech-recorder` library for VAD. You can adjust VAD para
 - `transcriptionWorker.js`: Worker for handling transcription tasks using AssemblyAI API.
 - `audioThread.js`: Worker for managing voice activity detection.
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
-- [AssemblyAI](https://www.assemblyai.com/) for providing the high-quality transcription API
 - [speech-recorder](https://github.com/serenadeai/speech-recorder) for the Voice Activity Detection functionality
 
 ## Troubleshooting
