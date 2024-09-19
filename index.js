@@ -73,14 +73,14 @@ function startNewRecording() {
     }
 
     if (chunkDuration >= CHUNK_SIZE) {
-      console.log(`[Main] Chunk duration reached: ${chunkDuration}ms`);
-      console.log(`[Main] Current silence duration: ${currentSilenceDuration}ms`);
+      // console.log(`[Main] Chunk duration reached: ${chunkDuration}ms`);
+      // console.log(`[Main] Current silence duration: ${currentSilenceDuration}ms`);
       
       if (currentSilenceDuration >= SILENCE_THRESHOLD) {
         console.log('[Main] Silence threshold reached, sending chunk');
         sendChunk();
       } else {
-        console.log('[Main] Waiting for silence before sending chunk');
+        // console.log('[Main] Waiting for silence before sending chunk');
       }
     }
   });
@@ -98,7 +98,7 @@ audioWorker.on('message', (message) => {
       if (isVoiceActive) {
         lastVoiceActivityTime = Date.now();
         currentSilenceDuration = 0;
-        console.log('[Main] Voice detected, resetting silence duration');
+        // console.log('[Main] Voice detected, resetting silence duration');
       }
       break;
   }
@@ -106,13 +106,21 @@ audioWorker.on('message', (message) => {
 
 transcriptionWorker.on('message', (message) => {
   if (message.type === 'transcriptComplete') {
-    console.log(`[Main] Received transcript for chunk #${message.chunkNumber}`);
-    receivedTranscripts[message.chunkNumber] = message.text || '(empty)';
+    console.log(`[Main] Received transcript for chunk #${message.chunkNumber}. Time Length: ${message.audioLength.toFixed(2)}s, Turnaround Time: ${message.turnaroundTime.toFixed(2)}s`);
+    receivedTranscripts[message.chunkNumber] = {
+      text: message.text || '(empty)',
+      audioLength: message.audioLength,
+      turnaroundTime: message.turnaroundTime
+    };
     pendingChunks.delete(message.chunkNumber);
     logOrderedTranscripts();
   } else if (message.type === 'transcriptError') {
     console.error(`[Main] Error transcribing chunk #${message.chunkNumber}:`, message.error);
-    receivedTranscripts[message.chunkNumber] = `(error: ${message.error})`;
+    receivedTranscripts[message.chunkNumber] = {
+      text: `(error: ${message.error})`,
+      audioLength: 0,
+      turnaroundTime: 0
+    };
     pendingChunks.delete(message.chunkNumber);
     logOrderedTranscripts();
   } else if (message.type === 'allTranscripts') {
@@ -129,7 +137,9 @@ transcriptionWorker.on('message', (message) => {
 function logOrderedTranscripts() {
   let i = lastLoggedChunk + 1;
   while (receivedTranscripts[i] !== undefined) {
-    console.log(`Chunk #${i}: ${receivedTranscripts[i]}`);
+    const transcript = receivedTranscripts[i];
+    console.log(`Chunk #${i}. Time Length: ${transcript.audioLength.toFixed(2)}s, Turnaround Time: ${transcript.turnaroundTime.toFixed(2)}s`);
+    console.log(`Chunk #${i}: ${transcript.text}`);
     lastLoggedChunk = i;
     i++;
   }
@@ -172,11 +182,11 @@ micInstance.start();
 // See docs for VAD parameters, default is most aggressive VAD
 const speechRecorder = new SpeechRecorder({
   onChunkStart: () => {
-    console.log("[VAD] Voice detected");
+    // console.log("[VAD] Voice detected");
     audioWorker.postMessage({ type: 'voiceStatus', isActive: true });
   },
   onChunkEnd: () => {
-    console.log("[VAD] No voice detected");
+    // console.log("[VAD] No voice detected");
     audioWorker.postMessage({ type: 'voiceStatus', isActive: false });
   },
 });

@@ -23,20 +23,28 @@ parentPort.on('message', async (message) => {
     console.log(`[Worker] Received chunk #${chunkNumber} for transcription`);
     try {
       console.log(`[Worker] Starting transcription for chunk #${chunkNumber}`);
+      const startTime = Date.now();
       const transcript = await client.transcripts.transcribe({
         audio: audio,
         language_code:'en'
         // language_detection: true --> uncomment for lang detection and comment lang code line above
       });
+      const endTime = Date.now();
+      const turnaroundTime = (endTime - startTime) / 1000; // Convert to seconds
       
       console.log(`[Worker] Transcription completed for chunk #${chunkNumber}`);
+      
+      // Calculate audio length in seconds (assuming audio is a Buffer)
+      const audioLengthSeconds = audio.length / (16000 * 2); // Assuming 16kHz 16-bit audio
       
       transcripts[chunkNumber] = transcript.text || '';
       
       parentPort.postMessage({ 
         type: 'transcriptComplete', 
         chunkNumber: chunkNumber,
-        text: transcript.text || ''
+        text: transcript.text || '',
+        audioLength: audioLengthSeconds,
+        turnaroundTime: turnaroundTime
       });
       
     } catch (error) {
