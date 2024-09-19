@@ -1,0 +1,15 @@
+{
+  "name": "speech-recorder-vad",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^22.5.5",
+    "assemblyai": "^4.7.0",
+    "dotenv": "^16.4.5",
+    "mic": "^2.1.2",
+    "node-record-lpcm16": "^1.0.1",
+    "speech-recorder": "^2.1.0",
+    "wav": "^1.0.2"
+  }
+}
