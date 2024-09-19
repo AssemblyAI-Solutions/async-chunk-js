@@ -1,6 +1,6 @@
 # AsyncChunkJS: Near-Realtime Node.js Speech-to-Text App
 
-AsyncChunk is a Node.js application that provides near-realtime speech-to-text transcription using chunked audio processing and asynchronous transcription. It utilizes voice activity detection (VAD) to optimize chunk processing and the AssemblyAI API for accurate transcription.
+AsyncChunkJS is a Node.js application that provides near-realtime speech-to-text transcription using chunked audio processing and asynchronous transcription. It leverages the power of AssemblyAI's async transcription API to deliver high-quality transcriptions at near real-time speeds.
 
 ## Features
 
@@ -9,7 +9,15 @@ AsyncChunk is a Node.js application that provides near-realtime speech-to-text t
 - Asynchronous transcription using AssemblyAI API
 - Ordered transcript logging
 - Configurable chunk size and silence threshold
-- Support for different languages and language detection
+- Support for multiple languages
+
+## Key Benefits
+
+- Access to AssemblyAI's powerful Universal-1 model for English, Spanish, French, and German
+- Support for all non-English languages available in AssemblyAI's async transcription service
+- Higher accuracy compared to real-time transcription models
+- More cost-effective than real-time transcription services
+- Near real-time performance with the quality of async transcription
 
 ## Prerequisites
 
@@ -90,7 +98,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- [AssemblyAI](https://www.assemblyai.com/) for providing the transcription API
+- [AssemblyAI](https://www.assemblyai.com/) for providing the high-quality transcription API
 - [speech-recorder](https://github.com/serenadeai/speech-recorder) for the Voice Activity Detection functionality
 
 ## Troubleshooting
